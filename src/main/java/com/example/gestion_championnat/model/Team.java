@@ -1,6 +1,7 @@
 package com.example.gestion_championnat.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -27,7 +28,6 @@ public class Team {
     @NotBlank(message = "le nom de l'équipe ne peut pas être vide")
     private String name;
 
-    @NotNull(message = "le nombre de points de l'équipe est obligatoire")
     @Temporal(value= TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -39,7 +39,8 @@ public class Team {
                     CascadeType.MERGE
             },
             mappedBy = "teamList")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Championship> championshipList = new ArrayList<>();
+
 
 }

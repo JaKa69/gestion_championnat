@@ -40,10 +40,30 @@ public class DayController {
         }
     }
 
-
-
+    //Create
     @PostMapping("/create")
     public ResponseEntity<Day> saveDay(@RequestBody Day dayToSave) {
         return new ResponseEntity<>(dayRepository.save(dayToSave), HttpStatus.CREATED);
+    }
+
+    //Update
+    @PutMapping("/{dayId}")
+    public ResponseEntity<Day> updateDay(@PathVariable Day dayId, @RequestBody Day dayToUpdate) {
+        if (dayId == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            dayToUpdate.setId(dayId.getId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(
+                    dayRepository.save(dayToUpdate)
+            );
+        }
+    }
+
+    //Delete
+
+    @DeleteMapping("/delete/{dayId}")
+    public ResponseEntity<?> deleteDay(@PathVariable Long dayId) {
+        dayRepository.deleteById(dayId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
