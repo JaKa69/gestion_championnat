@@ -19,6 +19,6 @@ public class Day {
     private String number;
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull(message = "l'id du championnat est obligatoire")
-    private Championship idChampionship;
+    private Championship Championship;
 
 }

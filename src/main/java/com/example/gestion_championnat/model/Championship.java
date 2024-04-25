@@ -1,14 +1,19 @@
 package com.example.gestion_championnat.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,9 +25,17 @@ public class Championship {
     @NotNull(message = "le nom du championnat est obligatoire")
     @NotBlank(message = "le nom du championnat ne peut pas être vide")
     private String name;
+
     @NotNull(message = "la date de début du championnat est obligatoire")
+    @Temporal(value= TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+
     @NotNull(message = "la date de fin du championnat est obligatoire")
+    @Temporal(value= TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     @NotNull(message = "le nombre de points pour une victoire est obligatoire")
     private int wonPoints;
@@ -30,6 +43,13 @@ public class Championship {
     private int lostPoints;
     @NotNull(message = "le nombre de points pour un match nul est obligatoire")
     private int drawPoints;
+    @ManyToMany (fetch = FetchType.LAZY, cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JsonManagedReference
+    @JoinTable(name="TeamChampionship", joinColumns = {@JoinColumn(name="IdChampionship")}, inverseJoinColumns = {@JoinColumn(name="IdTeam")})
+    private List<Team> teamList = new ArrayList<>();
 
 
 

@@ -17,10 +17,12 @@ public class Game {
     private int team1Point;
     @NotNull(message = "le score de l'équipe 2 est obligatoire")
     private int team2Point;
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull(message = "l'id de l'équipe 1 est obligatoire")
-    private int team1Id;
+    private Team team1;
     @NotNull(message = "l'id de l'équipe 2 est obligatoire")
-    private int team2Id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Team team2;
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull(message = "l'id de la journée est obligatoire")
     private Day idDay;
