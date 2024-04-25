@@ -1,6 +1,8 @@
 package com.example.gestion_championnat.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -48,7 +50,7 @@ public class Championship {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
-    @JsonManagedReference
+    @JsonIgnore
     @JoinTable(name="TeamChampionship", joinColumns = {@JoinColumn(name="IdChampionship")}, inverseJoinColumns = {@JoinColumn(name="IdTeam")})
     private List<Team> teamList = new ArrayList<>();
 
