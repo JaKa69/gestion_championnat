@@ -21,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Team {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull(message = "le nom de l'équipe est obligatoire")
     @NotBlank(message = "le nom de l'équipe ne peut pas être vide")

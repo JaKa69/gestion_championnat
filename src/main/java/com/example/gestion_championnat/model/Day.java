@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Day {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull(message = "le numéro de la journée est obligatoire")
     @NotBlank(message = "le numéro de la journée ne peut pas être vide")

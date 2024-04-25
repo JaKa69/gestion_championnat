@@ -21,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Championship {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull(message = "le nom du championnat est obligatoire")
     @NotBlank(message = "le nom du championnat ne peut pas être vide")
