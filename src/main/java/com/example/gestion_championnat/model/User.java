@@ -9,7 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 @Entity
 @Data
@@ -35,5 +36,5 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
     @NotNull(message = "creationDate field cannot be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime creationDate;
+    private LocalDate creationDate;
 }
