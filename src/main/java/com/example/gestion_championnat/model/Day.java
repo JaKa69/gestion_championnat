@@ -18,8 +18,8 @@ public class Day {
     @NotNull(message = "le numéro de la journée est obligatoire")
     @NotBlank(message = "le numéro de la journée ne peut pas être vide")
     private String number;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull(message = "l'id du championnat est obligatoire")
-    private Championship Championship;
+    private Championship championship;
 
 }
