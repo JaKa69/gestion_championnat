@@ -1,8 +1,8 @@
 package com.example.gestion_championnat.controller;
 
+import com.example.gestion_championnat.dto.LoginRequest;
 import com.example.gestion_championnat.model.User;
-import com.example.gestion_championnat.repository.UserRepository;
-import jakarta.validation.Valid;
+import com.example.gestion_championnat.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,48 +13,63 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-    private final UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private final UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @PostMapping("/")
-    public ResponseEntity<User> saveUser(@RequestBody User userToSave) {
-        return ResponseEntity.status(
-                HttpStatus.CREATED
-        ).body(
-                this.userRepository.save(userToSave)
-        );
-    }
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUser() {
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
+
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
-        return new ResponseEntity<>(userRepository.findById(userId).orElse(null), HttpStatus.OK);
+    public ResponseEntity<User> getUserById(@PathVariable String userId) {
+        return ResponseEntity.of(userService.findUserById(Long.valueOf(userId)));
+    }
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+        try {
+            userService.registerUser(user);
+            return ResponseEntity.ok("User registered successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error during registration: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+        try {
+            boolean loginSuccess = userService.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
+            if (loginSuccess) {
+                return ResponseEntity.ok("User logged in successfully!");
+            } else {
+                return ResponseEntity.status(401).body("Invalid credentials");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Login error: " + e.getMessage());
+        }
     }
 
     @PutMapping("/update/{user}")
     public ResponseEntity<User> updateUser (@PathVariable(name = "user", required = false) User user,
-                                          @Valid @RequestBody User userUpdate) {
+                                            @RequestBody User userUpdate) {
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user introuvable");
         } else {
-            userUpdate.setId(user.getId());
             return ResponseEntity.status(HttpStatus.CREATED).body(
-                    userRepository.save(userUpdate)
+                    userService.UpdateUser(user, userUpdate)
             );
         }
     }
 
     @DeleteMapping("/{user}")
-    public void deleteUserById(@PathVariable(name = "user", required = false) User user) {
+    public ResponseEntity<Boolean> deleteUserById(@PathVariable(name = "user", required = false) User user) {
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user introuvable");
         } else {
-            userRepository.delete(user);
+            return ResponseEntity.ok(userService.deleteUser(user));
         }
     }
 }
