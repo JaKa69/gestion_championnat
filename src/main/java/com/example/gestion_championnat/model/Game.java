@@ -1,9 +1,6 @@
 package com.example.gestion_championnat.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -24,7 +21,8 @@ public class Game {
     private int team1Id;
     @NotNull(message = "l'id de l'équipe 2 est obligatoire")
     private int team2Id;
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull(message = "l'id de la journée est obligatoire")
-    private int idDay;
+    private Day idDay;
 
 }
