@@ -19,16 +19,19 @@ public class DayController {
         this.dayRepository = dayRepository;
     }
 
+    //Récupérer la liste des journées
     @GetMapping("/all")
     public ResponseEntity<List<Day>> getAllDay() {
         return new ResponseEntity<>(dayRepository.findAll(), HttpStatus.OK);
     }
 
+    //Récupérer par ID
     @GetMapping("/{dayId}")
     public ResponseEntity<Day> getDayById(@PathVariable Long dayId) {
         return new ResponseEntity<>(dayRepository.findById(dayId).orElse(null), HttpStatus.OK);
     }
 
+    // Récupérer la liste des journées suivant l’id d’un championnat
     @GetMapping("/championship/{championshipId}")
     public ResponseEntity<List<Day>> getDayByChampionshipId(@PathVariable Long championshipId) {
         Optional<List<Day>> daysOptional = dayRepository.findByChampionshipId(championshipId);
@@ -40,13 +43,13 @@ public class DayController {
         }
     }
 
-    //Create
+    //Créer une journée pour un championnat
     @PostMapping("/create")
     public ResponseEntity<Day> saveDay(@RequestBody Day dayToSave) {
         return new ResponseEntity<>(dayRepository.save(dayToSave), HttpStatus.CREATED);
     }
 
-    //Update
+    // Mettre à jour une journée
     @PutMapping("/{dayId}")
     public ResponseEntity<Day> updateDay(@PathVariable Day dayId, @RequestBody Day dayToUpdate) {
         if (dayId == null) {
@@ -59,7 +62,9 @@ public class DayController {
         }
     }
 
-    //Delete
+
+
+    //Supprimer une journée
 
     @DeleteMapping("/delete/{dayId}")
     public ResponseEntity<?> deleteDay(@PathVariable Long dayId) {
