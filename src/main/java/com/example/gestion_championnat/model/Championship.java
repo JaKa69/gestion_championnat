@@ -2,8 +2,6 @@ package com.example.gestion_championnat.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +11,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,12 +44,15 @@ public class Championship {
     @NotNull(message = "le nombre de points pour un match nul est obligatoire")
     private int drawPoints;
     @ManyToMany (fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
+            CascadeType.ALL
     })
     @JsonIgnore
     @JoinTable(name="TeamChampionship", joinColumns = {@JoinColumn(name="IdChampionship")}, inverseJoinColumns = {@JoinColumn(name="IdTeam")})
     private List<Team> teamList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Day> days = new ArrayList<>();
 
 
 

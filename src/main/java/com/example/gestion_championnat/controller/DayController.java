@@ -1,6 +1,8 @@
 package com.example.gestion_championnat.controller;
 
+import com.example.gestion_championnat.model.Championship;
 import com.example.gestion_championnat.model.Day;
+import com.example.gestion_championnat.repository.ChampionshipRepository;
 import com.example.gestion_championnat.repository.DayRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +17,11 @@ public class DayController {
 
     private final DayRepository dayRepository;
 
-    public DayController(DayRepository dayRepository) {
+    private final ChampionshipRepository championshipRepository;
+
+    public DayController(DayRepository dayRepository, ChampionshipRepository championshipRepository) {
         this.dayRepository = dayRepository;
+        this.championshipRepository = championshipRepository;
     }
 
     //Récupérer la liste des journées
@@ -46,7 +51,17 @@ public class DayController {
     //Créer une journée pour un championnat
     @PostMapping("/create")
     public ResponseEntity<Day> saveDay(@RequestBody Day dayToSave) {
-        return new ResponseEntity<>(dayRepository.save(dayToSave), HttpStatus.CREATED);
+        // Récupérer le championnat associé à partir de la base de données
+
+        Championship championship = championshipRepository.findById(dayToSave.getChampionship().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid championship Id"));
+
+        // Associer le championnat à la journée
+        dayToSave.setChampionship(championship);
+
+        // Enregistrer la journée avec son championnat associé
+        Day savedDay = dayRepository.save(dayToSave);
+        return new ResponseEntity<>(savedDay, HttpStatus.CREATED);
     }
 
     // Mettre à jour une journée
@@ -66,7 +81,7 @@ public class DayController {
 
     //Supprimer une journée
 
-    @DeleteMapping("/delete/{dayId}")
+    @DeleteMapping("/{dayId}")
     public ResponseEntity<?> deleteDay(@PathVariable Long dayId) {
         dayRepository.deleteById(dayId);
         return new ResponseEntity<>(HttpStatus.OK);
