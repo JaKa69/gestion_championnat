@@ -1,7 +1,6 @@
 package com.example.gestion_championnat.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,12 +30,41 @@ public class Team {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate creationDate;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.ALL
-            },
-            mappedBy = "teamList")
-    @JsonIgnore
-    private List<Championship> championshipList = new ArrayList<>();
+    @Column(nullable = false)
+    private String logo;
 
+    @Column(nullable = false)
+    private String coach;
+
+    @Column(nullable = false)
+    private String president;
+
+    @Column(nullable = false)
+    private String status;
+
+    @Column(nullable = false)
+    private String siege;
+
+    @Column(nullable = false)
+    private String phone;
+
+    @Column(nullable = false)
+    private String webSite;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Country country;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Stadium stadium;
+
+    @ManyToMany(mappedBy = "teams")
+    private List<Championship> championships;
+
+    @OneToMany(mappedBy = "team1")
+    private List<Game> homeGames;
+
+    @OneToMany(mappedBy = "team2")
+    private List<Game> awayGames;
 }

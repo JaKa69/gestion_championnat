@@ -36,4 +36,6 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate creationDate;
+    @Column
+    private String role;
 }

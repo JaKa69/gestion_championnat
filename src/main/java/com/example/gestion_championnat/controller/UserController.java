@@ -1,19 +1,18 @@
 package com.example.gestion_championnat.controller;
 
-import com.example.gestion_championnat.dto.LoginRequest;
 import com.example.gestion_championnat.model.User;
 import com.example.gestion_championnat.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(value = "/user")
+@Controller
 public class UserController {
-
     private final UserService userService;
     public UserController(UserService userService) {
         this.userService = userService;
@@ -29,26 +28,13 @@ public class UserController {
         return ResponseEntity.of(userService.findUserById(Long.valueOf(userId)));
     }
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
+    public String registerUser(@ModelAttribute("user") User user, Model model) {
         try {
             userService.registerUser(user);
-            return ResponseEntity.ok("User registered successfully!");
+            return "redirect:/login?registered=true";
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error during registration: " + e.getMessage());
-        }
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
-        try {
-            boolean loginSuccess = userService.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
-            if (loginSuccess) {
-                return ResponseEntity.ok("User logged in successfully!");
-            } else {
-                return ResponseEntity.status(401).body("Invalid credentials");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Login error: " + e.getMessage());
+            model.addAttribute("error", "Erreur lors de l'inscription : " + e.getMessage());
+            return "public/register";
         }
     }
 

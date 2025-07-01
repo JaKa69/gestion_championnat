@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Championnats</title></head>
+<body>
+<h1>Liste des championnats</h1>
+<ul>
+    <li th:each="champ : ${championships}">
+        <a th:href="@{/championships/{id}/ranking(id=${champ.id})}"
+           th:text="${champ.name}">Nom du championnat</a>
+    </li>
+</ul>
+</body>
+</html>

@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -44,17 +43,10 @@ public class Championship {
     @NotNull(message = "le nombre de points pour un match nul est obligatoire")
     private int drawPoints;
     @ManyToMany (fetch = FetchType.LAZY, cascade = {
-            CascadeType.ALL
+            CascadeType.PERSIST,
+            CascadeType.MERGE
     })
     @JsonIgnore
-    @JoinTable(name="TeamChampionship", joinColumns = {@JoinColumn(name="IdChampionship")}, inverseJoinColumns = {@JoinColumn(name="IdTeam")})
-    private List<Team> teamList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Day> days = new ArrayList<>();
-
-
-
-
+    @JoinTable(name="TeamChampionShip", joinColumns = {@JoinColumn(name="idChampionship")}, inverseJoinColumns = {@JoinColumn(name="idTeam")})
+    private List<Team> teams;
 }

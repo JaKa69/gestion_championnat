@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Classement</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Classement du championnat</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Équipe</th>
+        <th>J</th>
+        <th>G</th>
+        <th>N</th>
+        <th>P</th>
+        <th>BP</th>
+        <th>BC</th>
+        <th>Diff</th>
+        <th>Pts</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ligne, iStat : ${classement}">
+        <td th:text="${iStat.count}">1</td>
+        <td th:text="${ligne.equipe.nom}">Équipe</td>
+        <td th:text="${ligne.joues}">0</td>
+        <td th:text="${ligne.gagnes}">0</td>
+        <td th:text="${ligne.nuls}">0</td>
+        <td th:text="${ligne.perdus}">0</td>
+        <td th:text="${ligne.butsPour}">0</td>
+        <td th:text="${ligne.butsContre}">0</td>
+        <td th:text="${ligne.difference}">0</td>
+        <td th:text="${ligne.points}">0</td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/championships}">Retour aux championnats</a>
+</body>
+</html>

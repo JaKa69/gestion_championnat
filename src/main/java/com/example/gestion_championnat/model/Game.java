@@ -23,15 +23,15 @@ public class Game {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @NotNull(message = "l'id de l'équipe 1 est obligatoire")
-    @JoinColumn(name = "team1_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "idTeam1", nullable = false)
     private Team team1;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @NotNull(message = "l'id de l'équipe 2 est obligatoire")
-    @JoinColumn(name = "team2_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(nullable = false, name = "idTeam2")
     private Team team2;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @NotNull(message = "l'id de la journée est obligatoire")
     private Day day;
 }

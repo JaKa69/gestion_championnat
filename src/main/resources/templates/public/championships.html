@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des championnats</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Liste des championnats</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Nom</th>
+        <th>Pays</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="champ : ${championships}">
+        <td th:text="${champ.name}">Nom</td>
+        <td th:text="${champ.pays}">Pays</td>
+        <td>
+            <a th:href="@{'/championships/' + ${champ.id} + '/ranking'}">Voir classement</a> |
+            <a th:href="@{'/championships/' + ${champ.id} + '/results'}">Voir résultats</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
