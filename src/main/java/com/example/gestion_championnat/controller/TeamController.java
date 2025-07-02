@@ -1,78 +1,38 @@
 package com.example.gestion_championnat.controller;
 
-import com.example.gestion_championnat.model.Championship;
 import com.example.gestion_championnat.model.Team;
-import com.example.gestion_championnat.repository.TeamRepository;
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.example.gestion_championnat.service.TeamService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import java.time.LocalDate;
 import java.util.List;
 
-@RestController
-@RequestMapping("/team")
+@Controller
 public class TeamController {
-
-    private final TeamRepository teamRepository;
-
-    public TeamController(TeamRepository teamRepository) {
-        this.teamRepository = teamRepository;
+    private final TeamService teamService;
+    public TeamController(TeamService teamService) {
+        this.teamService = teamService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Team>> getAllTeam() {
-        return new ResponseEntity<>(teamRepository.findAll(), HttpStatus.OK);
+    @GetMapping("/teams/{id}")
+    public String viewTeam(@PathVariable Long id, Model model) throws Exception {
+        Team team = teamService.getById(id);
+        model.addAttribute("team", team);
+        return "public/team";
+    }
+    @GetMapping("/teams/")
+    public String viewTeamList(@PathVariable Long id, Model model) throws Exception {
+        List<Team> teams = teamService.getAllTeams();
+        model.addAttribute("teams", teams);
+        return "public/team";
+    }
+    @GetMapping("/admin/teams")
+    public String adminTeams(Model model) {
+        List<Team> teams = teamService.getAllTeams();
+        model.addAttribute("teams", teams);
+        return "private/teams";
     }
 
-    @GetMapping("/championship/{championshipId}")
-    public ResponseEntity<List<Team>> getTeamsByChampionshipId(@PathVariable Long championshipId) {
-        return ResponseEntity.of(
-                teamRepository.findByChampionshipId(championshipId)
-        );
-    }
-    @GetMapping("/{teamId}")
-    public ResponseEntity<Team> getTeamsById(@PathVariable Long teamId) {
-        return ResponseEntity.of(
-                teamRepository.findById(teamId)
-        );
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<Team> saveTeam(@RequestBody Team teamToSave) {
-        teamToSave.setCreationDate(LocalDate.now());
-        return new ResponseEntity<>(teamRepository.save(teamToSave), HttpStatus.CREATED);
-    }
-
-    @PutMapping("/update/{team}")
-    public ResponseEntity<Team> updateTeam (@PathVariable(name = "team", required = false) Team team,
-                                                            @Valid @RequestBody Team teamUpdate) {
-        if (team == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            teamUpdate.setId(team.getId());
-            return ResponseEntity.status(HttpStatus.CREATED).body(
-                    teamRepository.save(teamUpdate)
-            );
-        }
-    }
-
-    @PutMapping("/add/{team}/{championship}")
-    public ResponseEntity<Team> addTeamInChampionship (@PathVariable(name = "team", required = false) Team team,
-                                            @PathVariable(name = "championship") Championship championshipToAdd) {
-        if (team == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            team.getChampionships().add(championshipToAdd);
-            return ResponseEntity.status(HttpStatus.CREATED).body(
-                    teamRepository.save(team)
-            );
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteTeam(@PathVariable Long id) {
-        teamRepository.deleteById(id);
-    }
 }

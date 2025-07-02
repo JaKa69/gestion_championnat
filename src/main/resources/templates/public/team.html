@@ -1,37 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Fiche équipe</title>
-    <meta charset="UTF-8">
-</head>
-<body>
-<h1 th:text="${team.name}">Nom équipe</h1>
+    <head>
+        <title>Fiche équipe</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div th:replace="navbar :: navbar"></div>
+        <h1 th:text="${team.name}">Nom équipe</h1>
 
-<p><strong>Entraîneur :</strong> <span th:text="${team.coach}">Nom</span></p>
-<p><strong>Président :</strong> <span th:text="${team.president}">Nom</span></p>
-<p><strong>Pays :</strong> <span th:text="${team.country.name}">France</span></p>
-<p><strong>Stade :</strong> <span th:text="${team.stadium.name}">Parc</span>
-    (capacité : <span th:text="${team.stadium.capacity}">40000</span>)
-</p>
-
-<h2>Historique des matchs</h2>
-<table>
-    <thead>
-    <tr>
-        <th>Adversaire</th>
-        <th>Score</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="match : ${matchs}">
-        <td th:text="${match.adversaire}">Adversaire</td>
-        <td th:text="${match.score}">2 - 1</td>
-        <td th:text="${#temporals.format(match.date, 'dd/MM/yyyy')}">01/01/2025</td>
-    </tr>
-    </tbody>
-</table>
-
-<a th:href="@{/championships}">Retour</a>
-</body>
+        <p><strong>Entraîneur :</strong> <span th:text="${team.coach}">Nom</span></p>
+        <p><strong>Président :</strong> <span th:text="${team.president}">Nom</span></p>
+        <p><strong>Pays :</strong> <span th:text="${team.country.name}">France</span></p>
+        <p><strong>Stade :</strong> <span th:text="${team.stadium.name}">Parc</span>
+            (capacité : <span th:text="${team.stadium.capacity}">40000</span>)
+        </p>
+        <h2>Historique des matchs</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Adversaire</th>
+                <th>Score</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="match : ${matchs}">
+                <td th:text="${match.adversaire}">Adversaire</td>
+                <td th:text="${match.score}">2 - 1</td>
+                <td th:text="${#temporals.format(match.date, 'dd/MM/yyyy')}">01/01/2025</td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/championships}">Retour</a>
+    </body>
 </html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security" lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <div th:fragment="navbar">
+            <nav style="background-color: #f0f0f0; padding: 10px;">
+                <a th:href="@{/}" style="margin-right: 15px;">Home</a>
+                <a th:href="@{/championships}" style="margin-right: 15px;">Championnats</a>
+                <a th:href="@{/championships/ranking}" style="margin-right: 15px;">Classement</a>
+                <a th:href="@{/matches}" style="margin-right: 15px;">Matchs</a>
+                <a th:href="@{/admin/dashboard}" style="margin-right: 15px;">Tableau de bord admin</a>
+
+                <span style="float: right;">
+                    <span sec:authorize="isAuthenticated()">
+                        Connecté |
+                        <form th:action="@{/logout}" method="post" style="display: inline;">
+                            <button type="submit">Se déconnecter</button>
+                        </form>
+                    </span>
+                    <span sec:authorize="isAnonymous()()">
+                        <a th:href="@{/login}">Connexion</a> |
+                        <a th:href="@{/register}">Inscription</a>
+                    </span>
+                </span>
+            </nav>
+            <hr/>
+        </div>
+    </body>
+</html>

@@ -2,35 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
       lang="fr">
-<head>
-    <meta charset="UTF-8" />
-    <title>Accueil - Gestion de Championnat</title>
-</head>
-<body>
-
-<h1 sec:authorize="isAuthenticated()"
-    th:text="'Bienvenue ' + ${user.firstName} + ' ' + ${user.lastName} + ' (' + ${user.role} + ')'">
-</h1>
-
-<h1 sec:authorize="isAnonymous()">
-    Bienvenue sur notre site de gestion de championnat
-</h1>
-
-<nav>
-    <a th:href="@{/login}" sec:authorize="isAnonymous()">Page Login</a>
-    <a th:href="@{/register}" sec:authorize="isAnonymous()">Créer un compte</a>
-
-    <a th:href="@{/championships}">Liste des Championnats</a>
-    <a th:href="@{'/championships/' + 1 + '/ranking'}">Classement du Championnat (id=1)</a>
-    <a th:href="@{'/teams/' + 1}">Informations d’une Équipe (id=1)</a>
-
-    <div sec:authorize="hasRole('ADMIN')">
-        <a th:href="@{/admin/dashboard}">Dashboard Admin</a>
-        <a th:href="@{/admin/championships}">Gérer les Championnats</a>
-        <a th:href="@{/admin/teams}">Gérer les Équipes</a>
-        <a th:href="@{/admin/games}">Gérer les Matchs</a>
-    </div>
-</nav>
-
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Accueil - Gestion de Championnat</title>
+    </head>
+    <body>
+    <div th:replace="navbar :: navbar"></div>
+    <h1 sec:authorize="isAuthenticated()"
+            th:text="'Bienvenue ' + ${user.firstName} + ' ' + ${user.lastName} + ' (' + ${user.role} + ')'" th:if="${user != null}">
+        </h1>
+        <h1 sec:authorize="isAnonymous()" th:if="${user != null}">
+            Bienvenue sur notre site de gestion de championnat
+        </h1>
+    </body>
 </html>

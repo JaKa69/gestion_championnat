@@ -1,43 +1,110 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
-    <title>Classement</title>
     <meta charset="UTF-8">
+    <title>Classement des Équipes</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        .form-circle {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 2px;
+        }
+
+        .win {
+            background-color: green;
+        }
+
+        .draw {
+            background-color: gray;
+        }
+
+        .loss {
+            background-color: red;
+        }
+
+        .up {
+            color: green;
+            font-weight: bold;
+        }
+
+        .down {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<h1>Classement du championnat</h1>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Équipe</th>
-        <th>J</th>
-        <th>G</th>
-        <th>N</th>
-        <th>P</th>
-        <th>BP</th>
-        <th>BC</th>
-        <th>Diff</th>
-        <th>Pts</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="ligne, iStat : ${classement}">
-        <td th:text="${iStat.count}">1</td>
-        <td th:text="${ligne.equipe.nom}">Équipe</td>
-        <td th:text="${ligne.joues}">0</td>
-        <td th:text="${ligne.gagnes}">0</td>
-        <td th:text="${ligne.nuls}">0</td>
-        <td th:text="${ligne.perdus}">0</td>
-        <td th:text="${ligne.butsPour}">0</td>
-        <td th:text="${ligne.butsContre}">0</td>
-        <td th:text="${ligne.difference}">0</td>
-        <td th:text="${ligne.points}">0</td>
-    </tr>
-    </tbody>
-</table>
+<div th:replace="navbar :: navbar"></div>
 
-<a th:href="@{/championships}">Retour aux championnats</a>
+<h2>Classement des Équipes</h2>
+
+<form method="get" th:action="@{/championships/ranking}">
+    <label for="championshipId">Choisissez un championnat :</label>
+    <select name="championshipId" id="championshipId" onchange="this.form.submit()">
+        <option th:each="champ : ${allChampionships}"
+                th:value="${champ.id}"
+                th:selected="${selectedChampionship != null and champ.id == selectedChampionship.id}"
+                th:text="${champ.name}">
+        </option>
+    </select>
+</form>
+
+<div th:if="${selectedChampionship != null}">
+    <h3 th:text="'Classement : ' + ${selectedChampionship.name}"></h3>
+
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Équipe</th>
+            <th>Pts</th>
+            <th>J</th>
+            <th>G</th>
+            <th>N</th>
+            <th>P</th>
+            <th>c.</th>
+            <th>+/-</th>
+            <th>Forme</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry, iterStat : ${rankings}">
+            <td th:text="${iterStat.index + 1}"></td>
+            <td th:text="${entry.team.name}">Nom</td>
+            <td th:text="${entry.points}">84</td>
+            <td th:text="${entry.played}">34</td>
+            <td th:text="${entry.won}">26</td>
+            <td th:text="${entry.draw}">6</td>
+            <td th:text="${entry.lost}">2</td>
+            <td th:text="${entry.goalDifference}">+57</td>
+            <td>
+                <span th:each="result : ${entry.form}">
+                    <span class="form-circle" th:classappend="${result == 'W'} ? ' win' : (result == 'D') ? ' draw' : ' loss'"></span>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
