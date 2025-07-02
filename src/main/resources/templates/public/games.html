@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Calendrier et résultats</title>
+        <style>
+            .day-section {
+                margin-bottom: 30px;
+            }
+
+            .date-label {
+                background-color: #f2f2f2;
+                padding: 8px;
+                font-weight: bold;
+            }
+
+            .game-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .team-name {
+                width: 30%;
+                text-align: right;
+            }
+
+            .score {
+                width: 10%;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .team-name.right {
+                text-align: left;
+            }
+        </style>
+    </head>
+    <body>
+        <div th:replace="~{public/navbar :: navbar}"></div>
+
+        <h2>Calendrier et résultats Ligue 1 2024-2025</h2>
+
+        <div th:each="day : ${days}" class="day-section">
+            <div class="date-label" th:text="${day.number}"></div>
+
+            <div th:each="game : ${day.games}" class="game-row">
+                <div class="team-name" th:text="${game.team1.name}"></div>
+                <div class="score" th:text="${game.team1Point} + ' - ' + ${game.team2Point}"></div>
+                <div class="team-name right" th:text="${game.team2.name}"></div>
+            </div>
+        </div>
+
+    </body>
+</html>

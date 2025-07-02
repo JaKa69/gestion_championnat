@@ -51,8 +51,4 @@ public class ThymeleafController {
     public String adminDashboard() {
         return "private/dashboard";
     }
-    @GetMapping("/admin/home")
-    public String adminHome() {
-        return "private/admin-home";
-    }
 }

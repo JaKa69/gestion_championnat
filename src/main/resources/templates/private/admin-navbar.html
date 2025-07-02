@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!-- Fragment de navbar principale -->
+<div th:fragment="navbar">
+    <div th:replace="~{public/navbar :: navbar}"></div>
+
+    <!-- Navbar admin -->
+    <div sec:authorize="hasRole('ADMIN')" style="background-color: #ddd; padding: 8px; font-size: 0.9rem;">
+        <strong>Admin:</strong>
+        <a th:href="@{/admin/championships}" style="margin-left: 10px; margin-right: 10px;">Gestion Championnats</a>
+        <a th:href="@{/admin/teams}" style="margin-right: 10px;">Gestion Équipes</a>
+        <a th:href="@{/admin/matches}" style="margin-right: 10px;">Gestion Matchs</a>
+    </div>
+
+    <hr/>
+</div>
+</body>
+</html>

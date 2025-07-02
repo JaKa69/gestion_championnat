@@ -1,4 +1,4 @@
-<div th:replace="navbar :: navbar"></div>
+<div th:replace="~{public/navbar :: navbar}"></div>
 <form th:action="@{/login}" method="post">
     <div class="mb-3">
         <label class="form-label">Email:</label>

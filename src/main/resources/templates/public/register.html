@@ -7,7 +7,7 @@
 </head>
 <body class="container mt-5">
 <div class="row justify-content-center">
-    <div th:replace="navbar :: navbar"></div>
+    <div th:replace="~{public/navbar :: navbar}"></div>
     <h2 class="text-center">Créer un compte</h2>
     <form th:action="@{/register}" method="post" th:object="${user}">
         <div class="mb-3">
