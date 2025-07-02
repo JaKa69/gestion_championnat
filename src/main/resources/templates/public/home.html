@@ -1,54 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      lang="fr">
 <head>
     <meta charset="UTF-8" />
     <title>Accueil - Gestion de Championnat</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            color: #333;
-        }
-        h1 {
-            color: #007BFF;
-        }
-        nav {
-            margin-top: 30px;
-        }
-        nav a {
-            display: inline-block;
-            margin: 0 15px;
-            text-decoration: none;
-            color: #007BFF;
-            font-weight: bold;
-            padding: 10px 20px;
-            border: 2px solid #007BFF;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        nav a:hover {
-            background-color: #007BFF;
-            color: white;
-        }
-    </style>
 </head>
 <body>
-<h1>Bienvenue sur notre site de gestion de championnat</h1>
+
+<h1 sec:authorize="isAuthenticated()"
+    th:text="'Bienvenue ' + ${user.firstName} + ' ' + ${user.lastName} + ' (' + ${user.role} + ')'">
+</h1>
+
+<h1 sec:authorize="isAnonymous()">
+    Bienvenue sur notre site de gestion de championnat
+</h1>
 
 <nav>
-    <a th:href="@{/login}">Page Login</a>
-    <a class="btn btn-outline-primary" th:href="@{/register}">Créer un compte</a>
+    <a th:href="@{/login}" sec:authorize="isAnonymous()">Page Login</a>
+    <a th:href="@{/register}" sec:authorize="isAnonymous()">Créer un compte</a>
+
     <a th:href="@{/championships}">Liste des Championnats</a>
-    <!-- Exemple avec un id de championnat à remplacer dynamiquement -->
     <a th:href="@{'/championships/' + 1 + '/ranking'}">Classement du Championnat (id=1)</a>
     <a th:href="@{'/teams/' + 1}">Informations d’une Équipe (id=1)</a>
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/admin/dashboard}">Dashboard Admin</a>
+        <a th:href="@{/admin/championships}">Gérer les Championnats</a>
+        <a th:href="@{/admin/teams}">Gérer les Équipes</a>
+        <a th:href="@{/admin/games}">Gérer les Matchs</a>
+    </div>
 </nav>
+
 </body>
 </html>

@@ -24,4 +24,9 @@ public class ChampionshipServiceImpl implements ChampionshipService {
     public List<Championship> getAllChampionships() {
         return championshipRepository.findAll();
     }
+
+    @Override
+    public Championship save(Championship championship) {
+        return championshipRepository.save(championship);
+    }
 }

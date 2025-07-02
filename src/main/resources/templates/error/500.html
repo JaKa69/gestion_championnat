@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Erreur 403 - Accès refusé</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding-top: 100px;
+        }
+        h1 {
+            font-size: 4em;
+        }
+        a {
+            color: #0056b3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>500</h1>
+<p>Une erreur est survenue, si l'erreur persiste, veuillez contacter un administrateur.</p>
+<a th:href="@{/}">Retour à l’accueil</a>
+</body>
+</html>

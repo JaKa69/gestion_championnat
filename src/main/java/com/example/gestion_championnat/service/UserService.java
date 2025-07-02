@@ -20,10 +20,6 @@ public class UserService {
         user.setCreationDate(LocalDate.now());
         userRepository.save(user);
     }
-    public boolean loginUser(String email, String password) {
-        Optional<User> user = userRepository.findUserByEmail(email);
-        return user.isPresent() && PasswordEncoderService.verifyPassword(password, user.get().getPassword());
-    }
 
     public boolean deleteUser(User user) {
         Long userId = user.getId();
@@ -37,6 +33,9 @@ public class UserService {
 
     public Optional<User> findUserById(Long userId) {
         return userRepository.findById(userId);
+    }
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     public User UpdateUser(User userToUpdate, User userUpdate) {

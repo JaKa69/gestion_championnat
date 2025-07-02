@@ -25,6 +25,8 @@ public class Championship {
     @NotBlank(message = "le nom du championnat ne peut pas être vide")
     private String name;
 
+    private String logo;
+
     @NotNull(message = "la date de début du championnat est obligatoire")
     @Temporal(value= TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -42,6 +44,11 @@ public class Championship {
     private int lostPoints;
     @NotNull(message = "le nombre de points pour un match nul est obligatoire")
     private int drawPoints;
+    @Column(nullable = false)
+    private String typeRanking;
+
+    @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL)
+    private List<Day> days;
     @ManyToMany (fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

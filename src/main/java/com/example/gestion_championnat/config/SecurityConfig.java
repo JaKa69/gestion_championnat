@@ -10,12 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -26,16 +29,24 @@ public class SecurityConfig {
             )
             .formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/admin/home", true)
+                .defaultSuccessUrl("/", true)
                 .permitAll()
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .permitAll()
+            )
+            .exceptionHandling(exception -> exception
+                .accessDeniedPage("/error")
+                .accessDeniedHandler(customAccessDeniedHandler)
             );
 
         return http.build();
+    }
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 
     @Bean

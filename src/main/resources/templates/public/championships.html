@@ -7,6 +7,11 @@
 <body>
 <h1>Liste des championnats</h1>
 
+<!-- Bouton Ajouter visible uniquement si l'utilisateur a le rôle ADMIN -->
+<div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+    <a th:href="@{/admin/championships/edit/0}">Créer un nouveau championnat</a>
+</div>
+
 <table border="1">
     <thead>
     <tr>
@@ -18,10 +23,15 @@
     <tbody>
     <tr th:each="champ : ${championships}">
         <td th:text="${champ.name}">Nom</td>
-        <td th:text="${champ.pays}">Pays</td>
+        <td th:text="${champ.country}">Pays</td>
         <td>
             <a th:href="@{'/championships/' + ${champ.id} + '/ranking'}">Voir classement</a> |
             <a th:href="@{'/championships/' + ${champ.id} + '/results'}">Voir résultats</a>
+
+            <!-- Bouton Modifier visible uniquement pour les admins -->
+            <span th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                | <a th:href="@{'/admin/championships/edit/' + ${champ.id}}">Modifier</a>
+            </span>
         </td>
     </tr>
     </tbody>

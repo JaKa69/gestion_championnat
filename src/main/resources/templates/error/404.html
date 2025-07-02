@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>404 - Page non trouvée</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #fff3cd;
+            color: #856404;
+            padding-top: 100px;
+        }
+        h1 {
+            font-size: 4em;
+        }
+        a {
+            color: #0056b3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>404</h1>
+<p>La page que vous cherchez n'existe pas ou a été déplacée.</p>
+<a th:href="@{/}">Retour à l'accueil</a>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire Championnat</title>
+</head>
+<body>
+<h1 th:text="${championship.id != null} ? 'Modifier un championnat' : 'Créer un championnat'">Formulaire Championnat</h1>
+
+<form th:action="@{/admin/championships/save}" th:object="${championship}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Nom :</label>
+    <input type="text" th:field="*{name}" required/><br/>
+
+    <label>Date de début :</label>
+    <input type="date" th:field="*{startDate}" required/><br/>
+
+    <label>Date de fin :</label>
+    <input type="date" th:field="*{endDate}" required/><br/>
+
+    <label>Points victoire :</label>
+    <input type="number" th:field="*{wonPoints}" required/><br/>
+
+    <label>Points défaite :</label>
+    <input type="number" th:field="*{lostPoints}" required/><br/>
+
+    <label>Points match nul :</label>
+    <input type="number" th:field="*{drawPoints}" required/><br/>
+
+    <label>Type de classement :</label>
+    <input type="text" th:field="*{typeRanking}" required/><br/>
+
+    <button type="submit">Enregistrer</button>
+</form>
+
+<a href="/" th:href="@{/championships}">Retour à la liste</a>
+</body>
+</html>
