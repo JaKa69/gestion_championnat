@@ -9,23 +9,30 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
-public class ThymeleafController {
+public class Usercontroller {
     private final UserService userService;
 
-    public ThymeleafController(UserService userService) {
+    public Usercontroller(UserService userService) {
         this.userService = userService;
     }
-
     @GetMapping("/")
     public String home(Model model, Principal principal) {
         if (principal != null) {
             User user = userService.findUserByEmail(principal.getName())
-                .orElse(null);
+                    .orElse(null);
             model.addAttribute("user", user);
         }
         return "public/home";
+    }
+    //admin
+    @GetMapping("/admin/dashboard")
+    public String adminDashboard(Model model) {
+        List<User> users = userService.findAll();
+        model.addAttribute("users", users);
+        return "private/dashboard";
     }
     @GetMapping("/login")
     public String login() {
@@ -46,9 +53,16 @@ public class ThymeleafController {
             return "public/register";
         }
     }
-    //admin
-    @GetMapping("/admin/dashboard")
-    public String adminDashboard() {
-        return "private/dashboard";
+    @PostMapping("/admin/user/update")
+    public String updateUser(@ModelAttribute("user") User user, Model model) {
+        try {
+            User userBefore = userService.findUserById(user.getId());
+            userService.UpdateUser(user, userBefore);
+
+            return "private/dashboard";
+        } catch (Exception e) {
+            model.addAttribute("error", "Erreur lors de l'inscription : " + e.getMessage());
+            return "private/dashboard";
+        }
     }
 }

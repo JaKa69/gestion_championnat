@@ -1,13 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head><title>Dashboard</title></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Dashboard</title>
+    <script>
+        function enableEdit(userId) {
+            console.log("toto")
+            document.getElementById('firstName-' + userId).removeAttribute('readonly');
+            document.getElementById('lastName-' + userId).removeAttribute('readonly');
+            document.getElementById('email-' + userId).removeAttribute('readonly');
+            document.getElementById('role-' + userId).removeAttribute('disabled');
+            document.getElementById('saveBtn-' + userId).style.display = 'inline';
+            document.getElementById('updateBtn-' + userId).style.display = 'none';
+        }
+    </script>
+</head>
 <body>
 <div th:replace="~{private/admin-navbar :: navbar}"></div>
-<h1>Bienvenue dans le backoffice</h1>
-<ul>
-    <li><a th:href="@{/templates/private/championships}">Gérer les championnats</a></li>
-    <li><a th:href="@{/templates/private/teams}">Gérer les équipes</a></li>
-    <li><a th:href="@{/templates/private/games}">Gérer les matchs</a></li>
-</ul>
+<h1>Bienvenue dans le backoffice -- Gestion des utilisateurs</h1>
+<button type="button" onclick="window.location.href='/register'">Ajouter un utilisateur</button>
+
+<table border="1">
+    <thead>...</thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <form th:action="@{/admin/user/update}" method="post">
+            <td>
+                <input type="text" th:id="${'firstName-' + user.id}" th:name="firstName" th:value="${user.firstName}" readonly />
+            </td>
+            <td>
+                <input type="text" th:id="${'lastName-' + user.id}" th:name="lastName" th:value="${user.lastName}" readonly />
+            </td>
+            <td>
+                <input type="email" th:id="${'email-' + user.id}" th:name="email" th:value="${user.email}" readonly />
+            </td>
+            <td>
+                <select th:id="${'role-' + user.id}" th:name="role" disabled>
+                    <option value="USER" th:selected="${user.role == 'USER'}">USER</option>
+                    <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">ADMIN</option>
+                </select>
+            </td>
+            <td>
+                <input type="hidden" name="id" th:value="${user.id}" />
+                <button type="button" th:id="${'updateBtn-' + user.id}" th:onclick="'enableEdit(' + ${user.id} + ')'">Update</button>
+                <button type="submit" th:id="${'saveBtn-' + user.id}" style="display:none;">Save</button>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>

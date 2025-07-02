@@ -31,16 +31,19 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findUserById(Long userId) {
-        return userRepository.findById(userId);
+    public User findUserById(Long userId) throws Exception {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("user not found with id: " + userId));
     }
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
 
     public User UpdateUser(User userToUpdate, User userUpdate) {
-        userUpdate.setId(userToUpdate.getId());
-        userUpdate.setCreationDate(userToUpdate.getCreationDate());
+        userUpdate.setFirstName(userToUpdate.getFirstName());
+        userUpdate.setLastName(userToUpdate.getLastName());
+        userUpdate.setEmail(userToUpdate.getEmail());
+        userUpdate.setRole(userToUpdate.getRole());
         return userRepository.save(userUpdate);
     }
 }
