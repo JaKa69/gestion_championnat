@@ -43,7 +43,7 @@
         <h2>Calendrier et résultats Ligue 1 2024-2025</h2>
 
         <div th:each="day : ${days}" class="day-section">
-            <div class="date-label" th:text="${day.number}"></div>
+            <div class="date-label" th:text="'Journée numéro ' + ${day.number}"></div>
 
             <div th:each="game : ${day.games}" class="game-row">
                 <div class="team-name" th:text="${game.team1.name}"></div>

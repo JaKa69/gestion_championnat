@@ -47,7 +47,7 @@ public class RankingServiceImpl implements RankingService {
 
         // Tri par points (et goalDiff, etc.)
         return rankings.values().stream()
-                .sorted(Comparator.comparing(TeamRanking::getPoints).reversed()
+                .sorted(Comparator.comparing(TeamRanking::getPoints)
                         .thenComparing(TeamRanking::getGoalDifference).reversed()
                         .thenComparing(TeamRanking::getGoalsFor, Comparator.reverseOrder()))
                 .toList();

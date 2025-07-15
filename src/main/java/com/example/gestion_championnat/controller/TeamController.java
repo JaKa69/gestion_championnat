@@ -23,7 +23,7 @@ public class TeamController {
         return "public/team";
     }
     @GetMapping("/teams/")
-    public String viewTeamList(@PathVariable Long id, Model model) throws Exception {
+    public String viewTeamList(Model model) {
         List<Team> teams = teamService.getAllTeams();
         model.addAttribute("teams", teams);
         return "public/team";

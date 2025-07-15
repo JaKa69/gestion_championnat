@@ -26,25 +26,12 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-
-        // --- Users ---
-//        if (userRepository.count() == 0) {
-//            User admin = new User();
-//            admin.setFirstName("Admin");
-//            admin.setLastName("User");
-//            admin.setEmail("admin@example.com");
-//            admin.setPassword(passwordEncoder.encode("admin123"));
-//            admin.setCreationDate(LocalDate.now());
-//            admin.setRole("ROLE_ADMIN");
-//            userRepository.save(admin);
 //
-//            User user = new User();
-//            user.setFirstName("Jean");
-//            user.setLastName("Dupont");
-//            user.setEmail("user@example.com");
-//            user.setPassword(passwordEncoder.encode("user123"));
-//            user.setCreationDate(LocalDate.now());
-//            user.setRole("ROLE_USER");
+//        // --- Users ---
+//        if (userRepository.count() == 0) {
+//            User admin = new User("Admin", "User", "admin@example.com", passwordEncoder.encode("admin123"), LocalDate.now(), "ROLE_ADMIN");
+//            User user = new User("Jean", "Dupont", "user@example.com", passwordEncoder.encode("user123"), LocalDate.now(), "ROLE_USER");
+//            userRepository.save(admin);
 //            userRepository.save(user);
 //        }
 //
@@ -54,69 +41,73 @@ public class DataInitializer implements CommandLineRunner {
 //        france.setLogo("france.png");
 //        countryRepository.save(france);
 //
-//        // --- Stadium ---
-//        Stadium parcDesPrinces = new Stadium();
-//        parcDesPrinces.setName("Parc des Princes");
-//        parcDesPrinces.setAddress("Paris");
-//        parcDesPrinces.setCapacity(50000);
-//        parcDesPrinces.setPhone("0123456789");
-//        stadiumRepository.save(parcDesPrinces);
+//        // --- Stadiums ---
+//        Stadium parcDesPrinces = new Stadium("Parc des Princes", "Paris", 47929, "0141234567");
+//        Stadium velodrome = new Stadium("Stade Vélodrome", "Marseille", 67394, "0491888888");
+//        Stadium groupama = new Stadium("Groupama Stadium", "Lyon", 59186, "0478000000");
+//        Stadium stadePierreMauroy = new Stadium("Stade Pierre-Mauroy", "Lille", 50000, "0320222222");
 //
-//        // --- Championship ---
+//        stadiumRepository.saveAll(List.of(parcDesPrinces, velodrome, groupama, stadePierreMauroy));
+//
+//        // --- Ligue 1 ---
 //        Championship ligue1 = new Championship();
-//        ligue1.setName("Ligue 1");
+//        ligue1.setName("Ligue 1 Uber Eats");
 //        ligue1.setLogo("ligue1.png");
-//        ligue1.setStartDate(LocalDate.of(2024, 8, 1));
-//        ligue1.setEndDate(LocalDate.of(2025, 5, 30));
+//        ligue1.setStartDate(LocalDate.of(2024, 8, 9));
+//        ligue1.setEndDate(LocalDate.of(2025, 5, 25));
 //        ligue1.setWonPoints(3);
 //        ligue1.setDrawPoints(1);
 //        ligue1.setLostPoints(0);
 //        ligue1.setTypeRanking("DIFFERENCE_BUTS");
 //        championshipRepository.save(ligue1);
 //
-//        // --- Teams ---
-//        List<Team> teams = new ArrayList<>();
-//        for (int i = 1; i <= 4; i++) {
-//            Team team = new Team();
-//            team.setName("Équipe " + i);
-//            team.setCoach("Coach " + i);
-//            team.setPresident("Président " + i);
-//            team.setCreationDate(LocalDate.of(2000 + i, 1, 1));
-//            team.setLogo("logo" + i + ".png");
-//            team.setStatus("Pro");
-//            team.setSiege("Ville " + i);
-//            team.setPhone("010101010" + i);
-//            team.setWebSite("http://equipe" + i + ".com");
-//            team.setCountry(france);
-//            team.setStadium(parcDesPrinces);
-//            teamRepository.save(team);
-//            teams.add(team);
-//        }
+//        List<Team> ligue1Teams = List.of(
+//                new Team("Paris Saint-Germain", LocalDate.of(1970, 8, 12), "psg.png", "Luis Enrique", "Nasser Al-Khelaïfi", "Pro", "Paris", "0145678910", "https://psg.fr", france, parcDesPrinces),
+//                new Team("Olympique de Marseille", LocalDate.of(1899, 8, 31), "om.png", "Roberto De Zerbi", "Pablo Longoria", "Pro", "Marseille", "0491880000", "https://om.net", france, velodrome),
+//                new Team("Olympique Lyonnais", LocalDate.of(1950, 5, 27), "ol.png", "Paulo Fonseca", "Michele Kang", "Pro", "Lyon", "0478006060", "https://ol.fr", france, groupama),
+//                new Team("LOSC Lille", LocalDate.of(1944, 9, 1), "losc.png", "Paulo Fonseca", "Olivier Létang", "Pro", "Lille", "0320222222", "https://losc.fr", france, stadePierreMauroy)
+//        );
 //
-//        ligue1.setTeams(teams);
+//        teamRepository.saveAll(ligue1Teams);
+//        ligue1.setTeams(ligue1Teams);
 //        championshipRepository.save(ligue1);
 //
-//        // --- Day & Games ---
-//        Day journee1 = new Day();
-//        journee1.setNumber("1");
-//        journee1.setChampionship(ligue1);
-//        dayRepository.save(journee1);
+//        // --- Ligue 2 ---
+//        Championship ligue2 = new Championship();
+//        ligue2.setName("Ligue 2 BKT");
+//        ligue2.setLogo("ligue2.png");
+//        ligue2.setStartDate(LocalDate.of(2024, 8, 16));
+//        ligue2.setEndDate(LocalDate.of(2025, 5, 23));
+//        ligue2.setWonPoints(3);
+//        ligue2.setDrawPoints(1);
+//        ligue2.setLostPoints(0);
+//        ligue2.setTypeRanking("DIFFERENCE_BUTS");
+//        championshipRepository.save(ligue2);
 //
-//        Game match1 = new Game();
-//        match1.setDay(journee1);
-//        match1.setTeam1(teams.get(0));
-//        match1.setTeam2(teams.get(1));
-//        match1.setTeam1Point(2);
-//        match1.setTeam2Point(1);
-//        gameRepository.save(match1);
+//        Stadium stadeSochaux = new Stadium("Stade Bonal", "Montbéliard", 20005, "0381693030");
+//        Stadium stadeSaintSymphorien = new Stadium("Stade Saint-Symphorien", "Metz", 25836, "0387360000");
 //
-//        Game match2 = new Game();
-//        match2.setDay(journee1);
-//        match2.setTeam1(teams.get(2));
-//        match2.setTeam2(teams.get(3));
-//        match2.setTeam1Point(0);
-//        match2.setTeam2Point(0);
-//        gameRepository.save(match2);
+//        stadiumRepository.saveAll(List.of(stadeSochaux, stadeSaintSymphorien));
+//
+//        List<Team> ligue2Teams = List.of(
+//                new Team("FC Sochaux", LocalDate.of(1928, 6, 18), "sochaux.png", "Oswald Tanchot", "Samuel Laurent", "Pro", "Sochaux", "0381690000", "https://fcsochaux.fr", france, stadeSochaux),
+//                new Team("FC Metz", LocalDate.of(1932, 4, 27), "metz.png", "László Bölöni", "Bernard Serin", "Pro", "Metz", "0387361212", "https://fcmetz.com", france, stadeSaintSymphorien)
+//        );
+//
+//        teamRepository.saveAll(ligue2Teams);
+//        ligue2.setTeams(ligue2Teams);
+//        championshipRepository.save(ligue2);
+//
+//        // --- Days and Games for Ligue 1 ---
+//        Day day1 = new Day();
+//        day1.setNumber("1");
+//        day1.setDate(LocalDate.of(2024, 8, 10));
+//        day1.setChampionship(ligue1);
+//        dayRepository.save(day1);
+//
+//        Game game1 = new Game(2, 1, ligue1Teams.get(0), ligue1Teams.get(1), day1);
+//        Game game2 = new Game(1, 1, ligue1Teams.get(2), ligue1Teams.get(3), day1);
+//        gameRepository.saveAll(List.of(game1, game2));
     }
 }
 

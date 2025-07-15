@@ -24,10 +24,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="match : ${matchs}">
-                <td th:text="${match.adversaire}">Adversaire</td>
-                <td th:text="${match.score}">2 - 1</td>
-                <td th:text="${#temporals.format(match.date, 'dd/MM/yyyy')}">01/01/2025</td>
+            <tr th:each="match : ${team.getHomeGames()}">
+                <td th:text="${match.getTeam2().getName()}">Adversaire</td>
+                <td th:text="${match.getTeam1Point()} + '-' + ${match.getTeam2Point()}">2 - 1</td>
+                <td th:text="${match.getDay().getNumber()}">01/01/2025</td>
             </tr>
             </tbody>
         </table>

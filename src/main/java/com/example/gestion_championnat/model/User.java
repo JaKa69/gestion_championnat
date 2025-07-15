@@ -38,4 +38,13 @@ public class User {
     private LocalDate creationDate;
     @Column
     private String role;
+
+    public User(String firstName, String lastName, String email, String password, LocalDate creationDate, String role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.creationDate = creationDate;
+        this.role = role;
+    }
 }

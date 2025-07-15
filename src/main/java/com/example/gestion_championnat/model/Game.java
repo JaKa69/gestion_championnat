@@ -34,4 +34,12 @@ public class Game {
     @ManyToOne
     @NotNull(message = "l'id de la journée est obligatoire")
     private Day day;
+
+    public Game(int team1Point, int team2Point, Team team1, Team team2, Day day) {
+        this.team1Point = team1Point;
+        this.team2Point = team2Point;
+        this.team1 = team1;
+        this.team2 = team2;
+        this.day = day;
+    }
 }

@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -48,11 +49,13 @@ public class Championship {
     private String typeRanking;
 
     @OneToMany(mappedBy = "championship", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Day> days;
     @ManyToMany (fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
+    @ToString.Exclude
     @JsonIgnore
     @JoinTable(name="TeamChampionShip", joinColumns = {@JoinColumn(name="idChampionship")}, inverseJoinColumns = {@JoinColumn(name="idTeam")})
     private List<Team> teams;

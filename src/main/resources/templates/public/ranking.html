@@ -83,13 +83,14 @@
             <th>P</th>
             <th>c.</th>
             <th>+/-</th>
-            <th>Forme</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="entry, iterStat : ${rankings}">
             <td th:text="${iterStat.index + 1}"></td>
-            <td th:text="${entry.team.name}">Nom</td>
+            <td>
+                <a th:href="@{'/teams/' + ${entry.team.id}}" th:text="${entry.team.name}">Nom</a>
+            </td>
             <td th:text="${entry.points}">84</td>
             <td th:text="${entry.played}">34</td>
             <td th:text="${entry.won}">26</td>
@@ -98,7 +99,9 @@
             <td th:text="${entry.goalDifference}">+57</td>
             <td>
                 <span th:each="result : ${entry.form}">
-                    <span class="form-circle" th:classappend="${result == 'W'} ? ' win' : (result == 'D') ? ' draw' : ' loss'"></span>
+                    <span class="form-circle win" th:if="${#strings.equals(result, 'W')}"></span>
+                    <span class="form-circle draw" th:if="${#strings.equals(result, 'D')}"></span>
+                    <span class="form-circle loss" th:if="${#strings.equals(result, 'L')}"></span>
                 </span>
             </td>
         </tr>

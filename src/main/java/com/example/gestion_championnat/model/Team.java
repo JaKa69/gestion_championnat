@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -53,18 +54,37 @@ public class Team {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @ToString.Exclude
     private Country country;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @ToString.Exclude
     private Stadium stadium;
 
     @ManyToMany(mappedBy = "teams")
+    @ToString.Exclude
     private List<Championship> championships;
 
     @OneToMany(mappedBy = "team1")
+    @ToString.Exclude
     private List<Game> homeGames;
 
     @OneToMany(mappedBy = "team2")
+    @ToString.Exclude
     private List<Game> awayGames;
+
+    public Team(String name, LocalDate creationDate, String logo, String coach, String president, String status, String siege, String phone, String webSite, Country country, Stadium stadium) {
+        this.name = name;
+        this.creationDate = creationDate;
+        this.logo = logo;
+        this.coach = coach;
+        this.president = president;
+        this.status = status;
+        this.siege = siege;
+        this.phone = phone;
+        this.webSite = webSite;
+        this.country = country;
+        this.stadium = stadium;
+    }
 }

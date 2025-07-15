@@ -22,7 +22,7 @@
     <tr th:each="champ : ${championships}">
         <td th:text="${champ.name}">Nom</td>
         <td>
-            <a th:href="@{'/championships/' + ${champ.id} + '/ranking'}">Voir classement</a> |
+            <a th:href="@{'/championships/ranking?championshipId=' + ${champ.id}}">Voir classement</a> |
             <a th:href="@{'/championships/' + ${champ.id} + '/results'}">Voir résultats</a>
 
             <span>

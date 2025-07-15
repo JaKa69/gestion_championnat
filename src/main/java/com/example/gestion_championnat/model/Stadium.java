@@ -30,4 +30,11 @@ public class Stadium {
 
     @OneToMany(mappedBy = "stadium")
     private List<Team> teams;
+
+    public Stadium(String name, String address, int capacity, String phone) {
+        this.name = name;
+        this.address = address;
+        this.capacity = capacity;
+        this.phone = phone;
+    }
 }
