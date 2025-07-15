@@ -7,4 +7,7 @@ import java.util.List;
 public interface TeamService {
     Team getById(Long id) throws Exception;
     List<Team> getAllTeams();
+    void save(Team team);
+
+    void delete(Long teamId);
 }

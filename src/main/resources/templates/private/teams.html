@@ -1,9 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head><title>Fiche équipe</title></head>
-<body>
-<div th:replace="~{private/admin-navbar :: navbar}"></div>
-<h1>Détails de l'équipe [[${teamId}]]</h1>
-<!-- Infos sur l’équipe, ses matchs, etc. -->
-</body>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Gestion des équipes</title>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            th, td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: left;
+            }
+
+            th {
+                background-color: #f0f0f0;
+            }
+
+            .actions button, .actions a {
+                margin-right: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div th:replace="~{private/admin-navbar :: navbar}"></div>
+        <h1>Liste des équipes</h1>
+        <a th:href="@{/admin/teams/new}">
+            <button>+ Ajouter une équipe</button>
+        </a>
+        <table>
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Coach</th>
+                <th>Président</th>
+                <th>Pays</th>
+                <th>Stade</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="team : ${teams}">
+                <td th:text="${team.name}">Nom</td>
+                <td th:text="${team.coach}">Coach</td>
+                <td th:text="${team.president}">Président</td>
+                <td th:text="${team.country.name}">Pays</td>
+                <td th:text="${team.stadium.name}">Stade</td>
+                <td class="actions">
+                    <a th:href="@{/admin/teams/edit/{id}(id=${team.id})}"><button>Modifier</button></a>
+                    <form th:action="@{/admin/teams/delete/{id}(id=${team.id})}" method="post" th:object="${team}" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Confirmer la suppression ?')">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </body>
 </html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${game.id != null} ? 'Modifier un match' : 'Créer un match'">Match</title>
+    <style>
+        form { max-width: 600px; margin: auto; }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        select, input { width: 100%; padding: 8px; margin-top: 5px; }
+        .actions { margin-top: 20px; text-align: right; }
+    </style>
+</head>
+<body>
+<div th:replace="~{private/admin-navbar :: navbar}"></div>
+
+<h2 th:text="${game.id != null} ? 'Modifier un match' : 'Créer un match'"></h2>
+
+<form th:action="@{/admin/matches/save}" th:object="${game}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+    <label>Journée</label>
+    <select th:field="*{day}" required>
+        <option value="">-- Choisir une journée --</option>
+        <option th:each="d : ${days}" th:value="${d.id}" th:text="${d.number}">J1</option>
+    </select>
+
+    <label>Équipe 1</label>
+    <select th:field="*{team1}" required>
+        <option value="">-- Choisir une équipe --</option>
+        <option th:each="t : ${teams}" th:value="${t.id}" th:text="${t.name}">Équipe 1</option>
+    </select>
+
+    <label>Score équipe 1</label>
+    <input type="number" th:field="*{team1Point}" min="0" required/>
+
+    <label>Équipe 2</label>
+    <select th:field="*{team2}" required>
+        <option value="">-- Choisir une équipe --</option>
+        <option th:each="t : ${teams}" th:value="${t.id}" th:text="${t.name}">Équipe 2</option>
+    </select>
+
+    <label>Score équipe 2</label>
+    <input type="number" th:field="*{team2Point}" min="0" required/>
+
+    <div class="actions">
+        <button type="submit">Enregistrer</button>
+        <a th:href="@{/admin/matches}"><button type="button">Annuler</button></a>
+    </div>
+</form>
+
+</body>
+</html>

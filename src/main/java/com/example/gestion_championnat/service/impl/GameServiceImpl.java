@@ -24,4 +24,14 @@ public class GameServiceImpl implements GameService {
     public Game getById(Long id) throws Exception {
         return gameRepository.findById(id).orElseThrow(() -> new Exception("Game not found with id: " + id));
     }
+
+    @Override
+    public void save(Game game) {
+        gameRepository.save(game);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        gameRepository.deleteById(id);
+    }
 }

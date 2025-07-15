@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des matchs</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background-color: #f0f0f0; }
+        .actions button, .actions form { display: inline; margin-right: 5px; }
+    </style>
+</head>
+<body>
+<div th:replace="~{private/admin-navbar :: navbar}"></div>
+
+<h1>Matchs programmés</h1>
+
+<a th:href="@{/admin/matches/new}">
+    <button>+ Ajouter un match</button>
+</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Jour</th>
+        <th>Équipe 1</th>
+        <th>Score</th>
+        <th>Équipe 2</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="match : ${games}">
+        <td th:text="${match.day.number}">1</td>
+        <td th:text="${match.team1.name}">Équipe 1</td>
+        <td th:text="${match.team1Point + ' - ' + match.team2Point}">2 - 1</td>
+        <td th:text="${match.team2.name}">Équipe 2</td>
+        <td class="actions">
+            <a th:href="@{/admin/matches/edit(id=${match.id})}">
+                <button>Modifier</button>
+            </a>
+            <form th:action="@{/admin/matches/delete(id=${match.id})}" method="post">
+                <button type="submit" onclick="return confirm('Supprimer ce match ?')">Supprimer</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="${team.id != null} ? 'Modifier une équipe' : 'Nouvelle équipe'">Équipe</title>
+        <style>
+            form {
+                max-width: 600px;
+                margin: auto;
+            }
+
+            label {
+                font-weight: bold;
+                display: block;
+                margin-top: 15px;
+            }
+
+            input, select {
+                width: 100%;
+                padding: 8px;
+                margin-top: 5px;
+            }
+
+            .actions {
+                margin-top: 20px;
+                text-align: right;
+            }
+
+            button {
+                padding: 8px 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <div th:replace="~{private/admin-navbar :: navbar}"></div>
+
+        <h2 th:text="${team.id != null} ? 'Modifier une équipe' : 'Créer une nouvelle équipe'"></h2>
+        <div th:with="formAction=${team.id != null} ? '/admin/teams/update' : '/admin/teams/save'">
+            <form th:action="@{${formAction}}" th:object="${team}" method="post">
+                <input type="hidden" th:if="${team.id != null}" th:field="*{id}"/>
+
+                <label for="name">Nom</label>
+                <input type="text" id="name" th:field="*{name}" required/>
+
+                <label for="coach">Entraîneur</label>
+                <input type="text" id="coach" th:field="*{coach}" required/>
+
+                <label for="president">Président</label>
+                <input type="text" id="president" th:field="*{president}" required/>
+
+                <label for="logo">Nom du fichier logo (ex: psg.png)</label>
+                <input type="text" id="logo" th:field="*{logo}" required/>
+
+                <label for="creationDate">Date de création</label>
+                <input type="date" id="creationDate" th:field="*{creationDate}" required/>
+
+                <label for="status">Statut</label>
+                <input type="text" id="status" th:field="*{status}" required/>
+
+                <label for="siege">Siège</label>
+                <input type="text" id="siege" th:field="*{siege}" required/>
+
+                <label for="phone">Téléphone</label>
+                <input type="text" id="phone" th:field="*{phone}" required/>
+
+                <label for="webSite">Site web</label>
+                <input type="url" id="webSite" th:field="*{webSite}" required/>
+
+                <label for="country">Pays</label>
+                <select id="country" th:field="*{country}" required>
+                    <option value="">-- Sélectionner un pays --</option>
+                    <option th:each="c : ${countries}" th:value="${c.id}" th:text="${c.name}"
+                            th:selected="${team.country != null and team.country.id == c.id}">
+                    </option>
+                </select>
+
+
+                <label for="stadium">Stade</label>
+                <select id="stadium" th:field="*{stadium}" required>
+                    <option value="">-- Sélectionner un stade --</option>
+                    <option th:each="s : ${stadiums}" th:value="${s.id}" th:text="${s.name}"
+                            th:selected="${team.stadium != null and team.stadium.id == s.id}">
+                    </option>
+                </select>
+
+
+                <div class="actions">
+                    <button type="submit">Enregistrer</button>
+                    <a th:href="@{/admin/teams}"><button type="button">Annuler</button></a>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

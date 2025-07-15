@@ -8,4 +8,8 @@ public interface GameService {
     List<Game> getAllGames();
 
     Game getById(Long id) throws Exception;
+
+    void save(Game game);
+
+    void deleteById(Long id);
 }

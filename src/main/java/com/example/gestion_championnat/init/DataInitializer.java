@@ -26,7 +26,6 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-//
 //        // --- Users ---
 //        if (userRepository.count() == 0) {
 //            User admin = new User("Admin", "User", "admin@example.com", passwordEncoder.encode("admin123"), LocalDate.now(), "ROLE_ADMIN");
@@ -108,6 +107,16 @@ public class DataInitializer implements CommandLineRunner {
 //        Game game1 = new Game(2, 1, ligue1Teams.get(0), ligue1Teams.get(1), day1);
 //        Game game2 = new Game(1, 1, ligue1Teams.get(2), ligue1Teams.get(3), day1);
 //        gameRepository.saveAll(List.of(game1, game2));
+//        // --- Days and Games for Ligue 2 ---
+//        Day day2 = new Day();
+//        day2.setNumber("1");
+//        day2.setDate(LocalDate.of(2024, 8, 17));
+//        day2.setChampionship(ligue2);
+//        dayRepository.save(day2);
+//
+//        // Match aller Sochaux vs Metz
+//        Game game3 = new Game(1, 0, ligue2Teams.get(0), ligue2Teams.get(1), day2);
+//        gameRepository.save(game3);
     }
 }
 
