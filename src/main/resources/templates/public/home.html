@@ -11,8 +11,8 @@
     <h1 sec:authorize="isAuthenticated()"
             th:text="'Bienvenue ' + ${user.firstName} + ' ' + ${user.lastName} + ' (' + ${user.role} + ')'" th:if="${user != null}">
         </h1>
-        <h1 sec:authorize="isAnonymous()" th:if="${user != null}">
-            Bienvenue sur notre site de gestion de championnat
-        </h1>
+    <h1 sec:authorize="isAnonymous()">
+        Bienvenue sur notre site de gestion de championnat
+    </h1>
     </body>
 </html>

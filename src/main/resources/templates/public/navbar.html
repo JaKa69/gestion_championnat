@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/extras/spring-security" lang="fr">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="fr">
     <head>
         <meta charset="UTF-8">
         <title></title>
@@ -21,7 +21,7 @@
                             <button type="submit">Se déconnecter</button>
                         </form>
                     </span>
-                    <span sec:authorize="isAnonymous()()">
+                    <span sec:authorize="isAnonymous()">
                         <a th:href="@{/login}">Connexion</a> |
                         <a th:href="@{/register}">Inscription</a>
                     </span>
