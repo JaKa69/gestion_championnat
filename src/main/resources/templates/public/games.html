@@ -40,7 +40,9 @@
     <body>
         <div th:replace="~{public/navbar :: navbar}"></div>
 
-        <h2>Calendrier et résultats</h2>
+        <h2 th:if="${championShipName != null}" th:text="'Calendrier et résultats du championnat : ' + ${championShipName}"></h2>
+        <h2 th:if="${championShipName == null}" th:text="'Calendrier et résultats'"></h2>
+
         <div th:each="day : ${days}" class="day-section">
             <div class="date-label" th:text="'Journée numéro ' + ${day.number} + 'de la ' + ${day.championship.name}"></div>
 

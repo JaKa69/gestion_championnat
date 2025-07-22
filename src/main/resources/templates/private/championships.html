@@ -1,13 +1,88 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head><title>Championnats</title></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Championnats</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .champ-name {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .champ-name:hover {
+            text-decoration: underline;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
 <body>
 <div th:replace="~{private/admin-navbar :: navbar}"></div>
+
 <h1>Liste des championnats</h1>
+<div style="text-align: center; margin-bottom: 20px;">
+    <a th:href="@{/admin/championships/new}">
+        <button class="edit-btn">+ Ajouter un championnat</button>
+    </a>
+</div>
+
 <ul>
     <li th:each="champ : ${championships}">
-        <a th:href="@{/championships/{id}/ranking(id=${champ.id})}"
+        <a class="champ-name" th:href="@{/admin/championships/edit/{id}(id=${champ.id})}"
            th:text="${champ.name}">Nom du championnat</a>
+
+        <div class="actions">
+            <a th:href="@{/admin/championships/edit/{id}(id=${champ.id})}">
+                <button class="edit-btn">Modifier</button>
+            </a>
+            <form th:action="@{/admin/championships/delete/{id}(id=${champ.id})}" method="post" th:object="${champ}" style="display:inline;">
+                <button type="submit" onclick="return confirm('Confirmer la suppression ?')">Supprimer</button>
+            </form>
+
+        </div>
     </li>
 </ul>
 </body>

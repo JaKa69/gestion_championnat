@@ -25,56 +25,41 @@ public class Team {
     @NotNull(message = "le nom de l'équipe est obligatoire")
     @NotBlank(message = "le nom de l'équipe ne peut pas être vide")
     private String name;
-
-    @Temporal(value= TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate creationDate;
-
     @Column(nullable = false)
     private String logo;
-
     @Column(nullable = false)
     private String coach;
-
     @Column(nullable = false)
     private String president;
-
     @Column(nullable = false)
     private String status;
-
     @Column(nullable = false)
     private String siege;
-
     @Column(nullable = false)
     private String phone;
-
     @Column(nullable = false)
     private String webSite;
-
     @ManyToOne
     @JoinColumn(nullable = false)
     @ToString.Exclude
     private Country country;
-
     @ManyToOne
     @JoinColumn(nullable = false)
     @ToString.Exclude
     private Stadium stadium;
-
     @ManyToMany(mappedBy = "teams")
     @ToString.Exclude
     private List<Championship> championships;
-
     @OneToMany(mappedBy = "team1")
     @ToString.Exclude
     private List<Game> homeGames;
-
     @OneToMany(mappedBy = "team2")
     @ToString.Exclude
     private List<Game> awayGames;
-
-    public Team(String name, LocalDate creationDate, String logo, String coach, String president, String status, String siege, String phone, String webSite, Country country, Stadium stadium) {
+    public Team(String name, LocalDate creationDate, String logo, String coach, String president, String status, String siege, String phone, String webSite, Country country, Stadium stadium, List<Championship> championship) {
         this.name = name;
         this.creationDate = creationDate;
         this.logo = logo;
@@ -86,5 +71,6 @@ public class Team {
         this.webSite = webSite;
         this.country = country;
         this.stadium = stadium;
+        this.championships = championship;
     }
 }

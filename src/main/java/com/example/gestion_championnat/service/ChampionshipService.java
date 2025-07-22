@@ -8,4 +8,6 @@ public interface ChampionshipService {
     Championship getById(Long id) throws Exception;
     List<Championship> getAllChampionships();
     Championship save(Championship championship);
+
+    void delete(Long championshipId);
 }

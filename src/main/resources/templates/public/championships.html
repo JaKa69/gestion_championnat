@@ -1,8 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <title>Liste des championnats</title>
     <meta charset="UTF-8">
+    <style>
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #34495e;
+            color: white;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #e6f7ff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        td a + a::before {
+            content: " | ";
+            margin: 0 4px;
+        }
+    </style>
+
 </head>
 <body>
 <div th:replace="~{public/navbar :: navbar}"></div>
@@ -14,7 +58,6 @@
     <thead>
     <tr>
         <th>Nom</th>
-        <th>Pays</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -22,12 +65,9 @@
     <tr th:each="champ : ${championships}">
         <td th:text="${champ.name}">Nom</td>
         <td>
-            <a th:href="@{'/championships/ranking?championshipId=' + ${champ.id}}">Voir classement</a> |
-            <a th:href="@{'/championships/' + ${champ.id} + '/results'}">Voir résultats</a>
+            <a th:href="@{'/championships/ranking?championshipId=' + ${champ.id}}">Voir classement</a>
+            <a th:href="@{'/championship/matches?championshipId=' + ${champ.id}}">Voir résultats</a>
 
-            <span>
-                | <a th:href="@{'/admin/championships/edit/' + ${champ.id}}">Modifier</a>
-            </span>
         </td>
     </tr>
     </tbody>

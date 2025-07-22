@@ -29,4 +29,9 @@ public class ChampionshipServiceImpl implements ChampionshipService {
     public Championship save(Championship championship) {
         return championshipRepository.save(championship);
     }
+
+    @Override
+    public void delete(Long championshipId) {
+        championshipRepository.deleteById(championshipId);
+    }
 }

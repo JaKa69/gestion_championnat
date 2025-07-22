@@ -32,7 +32,6 @@ public class User {
     @NotNull(message = "password field cannot be null")
     @NotBlank(message = "password field cannot be empty")
     private String password;
-    @Temporal(value= TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate creationDate;

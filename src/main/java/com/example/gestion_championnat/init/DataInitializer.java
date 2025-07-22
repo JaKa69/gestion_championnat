@@ -28,8 +28,8 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) {
 //        // --- Users ---
 //        if (userRepository.count() == 0) {
-//            User admin = new User("Admin", "User", "admin@example.com", passwordEncoder.encode("admin123"), LocalDate.now(), "ROLE_ADMIN");
-//            User user = new User("Jean", "Dupont", "user@example.com", passwordEncoder.encode("user123"), LocalDate.now(), "ROLE_USER");
+//            User admin = new User("Admin", "User", "admin@example.com", passwordEncoder.encode("admin123"), LocalDate.now(), "ADMIN");
+//            User user = new User("Jean", "Dupont", "user@example.com", passwordEncoder.encode("user123"), LocalDate.now(), "USER");
 //            userRepository.save(admin);
 //            userRepository.save(user);
 //        }
@@ -61,10 +61,10 @@ public class DataInitializer implements CommandLineRunner {
 //        championshipRepository.save(ligue1);
 //
 //        List<Team> ligue1Teams = List.of(
-//                new Team("Paris Saint-Germain", LocalDate.of(1970, 8, 12), "psg.png", "Luis Enrique", "Nasser Al-Khelaïfi", "Pro", "Paris", "0145678910", "https://psg.fr", france, parcDesPrinces),
-//                new Team("Olympique de Marseille", LocalDate.of(1899, 8, 31), "om.png", "Roberto De Zerbi", "Pablo Longoria", "Pro", "Marseille", "0491880000", "https://om.net", france, velodrome),
-//                new Team("Olympique Lyonnais", LocalDate.of(1950, 5, 27), "ol.png", "Paulo Fonseca", "Michele Kang", "Pro", "Lyon", "0478006060", "https://ol.fr", france, groupama),
-//                new Team("LOSC Lille", LocalDate.of(1944, 9, 1), "losc.png", "Paulo Fonseca", "Olivier Létang", "Pro", "Lille", "0320222222", "https://losc.fr", france, stadePierreMauroy)
+//                new Team("Paris Saint-Germain", LocalDate.of(1970, 8, 12), "psg.png", "Luis Enrique", "Nasser Al-Khelaïfi", "Pro", "Paris", "0145678910", "https://psg.fr", france, parcDesPrinces, List.of(ligue1)),
+//                new Team("Olympique de Marseille", LocalDate.of(1899, 8, 31), "om.png", "Roberto De Zerbi", "Pablo Longoria", "Pro", "Marseille", "0491880000", "https://om.net", france, velodrome, List.of(ligue1)),
+//                new Team("Olympique Lyonnais", LocalDate.of(1950, 5, 27), "ol.png", "Paulo Fonseca", "Michele Kang", "Pro", "Lyon", "0478006060", "https://ol.fr", france, groupama, List.of(ligue1)),
+//                new Team("LOSC Lille", LocalDate.of(1944, 9, 1), "losc.png", "Paulo Fonseca", "Olivier Létang", "Pro", "Lille", "0320222222", "https://losc.fr", france, stadePierreMauroy, List.of(ligue1))
 //        );
 //
 //        teamRepository.saveAll(ligue1Teams);
@@ -89,8 +89,8 @@ public class DataInitializer implements CommandLineRunner {
 //        stadiumRepository.saveAll(List.of(stadeSochaux, stadeSaintSymphorien));
 //
 //        List<Team> ligue2Teams = List.of(
-//                new Team("FC Sochaux", LocalDate.of(1928, 6, 18), "sochaux.png", "Oswald Tanchot", "Samuel Laurent", "Pro", "Sochaux", "0381690000", "https://fcsochaux.fr", france, stadeSochaux),
-//                new Team("FC Metz", LocalDate.of(1932, 4, 27), "metz.png", "László Bölöni", "Bernard Serin", "Pro", "Metz", "0387361212", "https://fcmetz.com", france, stadeSaintSymphorien)
+//                new Team("FC Sochaux", LocalDate.of(1928, 6, 18), "sochaux.png", "Oswald Tanchot", "Samuel Laurent", "Pro", "Sochaux", "0381690000", "https://fcsochaux.fr", france, stadeSochaux, List.of(ligue2)),
+//                new Team("FC Metz", LocalDate.of(1932, 4, 27), "metz.png", "László Bölöni", "Bernard Serin", "Pro", "Metz", "0387361212", "https://fcmetz.com", france, stadeSaintSymphorien, List.of(ligue2))
 //        );
 //
 //        teamRepository.saveAll(ligue2Teams);

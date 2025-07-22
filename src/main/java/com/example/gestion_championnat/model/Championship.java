@@ -29,13 +29,11 @@ public class Championship {
     private String logo;
 
     @NotNull(message = "la date de début du championnat est obligatoire")
-    @Temporal(value= TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
     @NotNull(message = "la date de fin du championnat est obligatoire")
-    @Temporal(value= TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;

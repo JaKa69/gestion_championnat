@@ -6,6 +6,7 @@
 </head>
 <body>
 <div th:replace="~{private/admin-navbar :: navbar}"></div>
+<a href="/" th:href="@{/championships}">Retour à la liste</a>
 <h1 th:text="${championship.id != null} ? 'Modifier un championnat' : 'Créer un championnat'">Formulaire Championnat</h1>
 
 <form th:action="@{/admin/championships/save}" th:object="${championship}" method="post">
@@ -35,6 +36,5 @@
     <button type="submit">Enregistrer</button>
 </form>
 
-<a href="/" th:href="@{/championships}">Retour à la liste</a>
 </body>
 </html>

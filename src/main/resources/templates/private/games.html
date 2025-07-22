@@ -15,7 +15,7 @@
 
 <h1>Matchs programmés</h1>
 
-<a th:href="@{/admin/matches/new}">
+<a th:href="@{/admin/games/new}">
     <button>+ Ajouter un match</button>
 </a>
 
@@ -36,10 +36,10 @@
         <td th:text="${match.team1Point + ' - ' + match.team2Point}">2 - 1</td>
         <td th:text="${match.team2.name}">Équipe 2</td>
         <td class="actions">
-            <a th:href="@{/admin/matches/edit(id=${match.id})}">
+            <a th:href="@{'/admin/games/edit/' + ${match.id}}">
                 <button>Modifier</button>
             </a>
-            <form th:action="@{/admin/matches/delete(id=${match.id})}" method="post">
+            <form th:action="@{/admin/games/delete(id=${match.id})}" method="post">
                 <button type="submit" onclick="return confirm('Supprimer ce match ?')">Supprimer</button>
             </form>
         </td>

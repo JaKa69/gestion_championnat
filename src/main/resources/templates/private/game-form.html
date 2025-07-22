@@ -2,51 +2,82 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${game.id != null} ? 'Modifier un match' : 'Créer un match'">Match</title>
+    <title th:text="${game.id != null} ? 'Modifier un match' : 'Nouveau match'">Match</title>
     <style>
-        form { max-width: 600px; margin: auto; }
-        label { display: block; margin-top: 15px; font-weight: bold; }
-        select, input { width: 100%; padding: 8px; margin-top: 5px; }
-        .actions { margin-top: 20px; text-align: right; }
+        form {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        .actions {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        button {
+            padding: 8px 16px;
+        }
     </style>
 </head>
 <body>
 <div th:replace="~{private/admin-navbar :: navbar}"></div>
 
-<h2 th:text="${game.id != null} ? 'Modifier un match' : 'Créer un match'"></h2>
+<h2 th:text="${game.id != null} ? 'Modifier un match' : 'Créer un nouveau match'"></h2>
 
-<form th:action="@{/admin/matches/save}" th:object="${game}" method="post">
-    <input type="hidden" th:field="*{id}"/>
+<div th:with="formAction=${game.id != null} ? '/admin/games/update' : '/admin/games/save'">
+    <form th:action="@{${formAction}}" th:object="${game}" method="post">
+        <input type="hidden" th:if="${game.id != null}" th:field="*{id}"/>
 
-    <label>Journée</label>
-    <select th:field="*{day}" required>
-        <option value="">-- Choisir une journée --</option>
-        <option th:each="d : ${days}" th:value="${d.id}" th:text="${d.number}">J1</option>
-    </select>
+        <label for="team1">Équipe 1</label>
+        <select id="team1" th:field="*{team1}" required>
+            <option value="">-- Sélectionner une équipe --</option>
+            <option th:each="t : ${teams}" th:value="${t.id}" th:text="${t.name}"
+                    th:selected="${game.team1 != null and game.team1.id == t.id}">
+            </option>
+        </select>
 
-    <label>Équipe 1</label>
-    <select th:field="*{team1}" required>
-        <option value="">-- Choisir une équipe --</option>
-        <option th:each="t : ${teams}" th:value="${t.id}" th:text="${t.name}">Équipe 1</option>
-    </select>
+        <label for="team2">Équipe 2</label>
+        <select id="team2" th:field="*{team2}" required>
+            <option value="">-- Sélectionner une équipe --</option>
+            <option th:each="t : ${teams}" th:value="${t.id}" th:text="${t.name}"
+                    th:selected="${game.team2 != null and game.team2.id == t.id}">
+            </option>
+        </select>
 
-    <label>Score équipe 1</label>
-    <input type="number" th:field="*{team1Point}" min="0" required/>
+        <label for="team1Point">Score Équipe 1</label>
+        <input type="number" id="team1Point" th:field="*{team1Point}" min="0" required/>
 
-    <label>Équipe 2</label>
-    <select th:field="*{team2}" required>
-        <option value="">-- Choisir une équipe --</option>
-        <option th:each="t : ${teams}" th:value="${t.id}" th:text="${t.name}">Équipe 2</option>
-    </select>
+        <label for="team2Point">Score Équipe 2</label>
+        <input type="number" id="team2Point" th:field="*{team2Point}" min="0" required/>
 
-    <label>Score équipe 2</label>
-    <input type="number" th:field="*{team2Point}" min="0" required/>
+        <label for="day">Journée</label>
+        <select id="day" th:field="*{day.id}" required>
+            <option value="">-- Sélectionner une journée --</option>
+            <option th:each="d : ${days}"
+                    th:value="${d.id}"
+                    th:text="'Journée ' + ${d.number}"
+                    th:selected="${game.day != null and game.day.id == d.id}">
+            </option>
+        </select>
 
-    <div class="actions">
-        <button type="submit">Enregistrer</button>
-        <a th:href="@{/admin/matches}"><button type="button">Annuler</button></a>
-    </div>
-</form>
 
+        <div class="actions">
+            <button type="submit">Enregistrer</button>
+            <a th:href="@{/admin/games}"><button type="button">Annuler</button></a>
+        </div>
+    </form>
+</div>
 </body>
 </html>

@@ -6,7 +6,9 @@
     </head>
     <body>
     <div th:replace="~{public/navbar :: navbar}"></div>
-        <h1 th:text="${team.name}">Nom équipe</h1>
+    <a th:href="@{/championships/ranking?championshipId=1}">Retour</a>
+
+    <h1 th:text="${team.name}">Nom équipe</h1>
 
         <p><strong>Entraîneur :</strong> <span th:text="${team.coach}">Nom</span></p>
         <p><strong>Président :</strong> <span th:text="${team.president}">Nom</span></p>
@@ -31,6 +33,5 @@
             </tr>
             </tbody>
         </table>
-        <a th:href="@{/championships}">Retour</a>
     </body>
 </html>
